@@ -8,7 +8,7 @@ export const PERSONAL_INFO = {
     "PostgreSQL, Oracle DB & Cloud Pipeline Specialist",
     "Competitive Programmer (LeetCode Top 6.3%)"
   ],
-  email: "aditya0211kumar@gmail.com",
+  email: "aadi0211kumar@gmail.com",
   phone: "+91 6202393823",
   location: "Bengaluru, Karnataka, India",
   status: "Available for Backend, Full-Stack & Distributed Systems Roles",

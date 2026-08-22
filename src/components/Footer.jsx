@@ -23,7 +23,7 @@ const Footer = () => {
               Aditya Kumar
             </span>
             <p className="text-xs text-slate-400">
-              Software Development Engineer • Genpact
+              Backend & Full-Stack Engineer • Genpact
             </p>
           </div>
         </div>
