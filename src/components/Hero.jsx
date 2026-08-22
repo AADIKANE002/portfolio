@@ -67,7 +67,7 @@ const Hero = ({ onOpenResume, onOpenTerminal, onShowToast }) => {
             {/* Status / Availability Badge */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 text-xs sm:text-sm font-medium mb-6 backdrop-blur-md shadow-sm">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 live-badge-dot" />
-              <span>Available for SDE & AI Roles</span>
+              <span>Available for Backend & Full-Stack Roles</span>
               <span className="text-cyan-500/60">|</span>
               <span className="text-slate-300">Bengaluru, India</span>
             </div>
@@ -101,7 +101,7 @@ const Hero = ({ onOpenResume, onOpenTerminal, onShowToast }) => {
                 onClick={() => soundFx.playClick()}
                 className="group flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black font-bold text-sm sm:text-base shadow-xl shadow-cyan-500/25 transition-all hover:scale-[1.02] active:scale-95"
               >
-                <span>Explore Projects</span>
+                <span>Explore Backend Projects</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </a>
 
@@ -174,30 +174,27 @@ const Hero = ({ onOpenResume, onOpenTerminal, onShowToast }) => {
                 </div>
                 <div className="flex items-center gap-1.5 text-xs font-mono text-slate-400">
                   <Code2 className="w-3.5 h-3.5 text-cyan-400" />
-                  <span>aditya_pipeline.py</span>
+                  <span>backend_service.py</span>
                 </div>
                 <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">
-                  AWS Lambda
+                  Django & AWS Lambda
                 </span>
               </div>
 
               {/* Code Snippet */}
               <pre className="text-xs sm:text-sm font-mono text-slate-300 overflow-x-auto leading-relaxed space-y-1">
                 <code>
-                  <span className="text-purple-400">class</span> <span className="text-cyan-300">SoftwareEngineer</span>:<br/>
+                  <span className="text-purple-400">class</span> <span className="text-cyan-300">BackendService</span>:<br/>
                   &nbsp;&nbsp;<span className="text-purple-400">def</span> <span className="text-blue-400">__init__</span>(<span className="text-amber-300">self</span>):<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-amber-300">self</span>.name = <span className="text-emerald-300">"{PERSONAL_INFO.name}"</span><br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-amber-300">self</span>.role = <span className="text-emerald-300">"SDE @ Genpact"</span><br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-amber-300">self</span>.leetcode = <span className="text-amber-400">1835</span> <span className="text-slate-400"># Top 6.3%</span><br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-amber-300">self</span>.stack = [<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span className="text-emerald-300">"Python"</span>, <span className="text-emerald-300">"AWS Lambda"</span>,<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span className="text-emerald-300">"Docker"</span>, <span className="text-emerald-300">"Agentic AI"</span><br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;]<br/><br/>
-                  &nbsp;&nbsp;<span className="text-purple-400">async def</span> <span className="text-blue-400">deploy_impact</span>(<span className="text-amber-300">self</span>):<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-amber-300">self</span>.framework = <span className="text-emerald-300">"Django / REST APIs"</span><br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-amber-300">self</span>.db = <span className="text-emerald-300">"PostgreSQL + Oracle DB"</span><br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-amber-300">self</span>.infra = [<span className="text-emerald-300">"AWS Lambda"</span>, <span className="text-emerald-300">"Docker"</span>, <span className="text-emerald-300">"CI/CD"</span>]<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-amber-300">self</span>.leetcode = <span className="text-amber-400">1835</span> <span className="text-slate-400"># Top 6.3%</span><br/><br/>
+                  &nbsp;&nbsp;<span className="text-purple-400">async def</span> <span className="text-blue-400">optimize_throughput</span>(<span className="text-amber-300">self</span>):<br/>
                   &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-purple-400">return</span> {`{`}<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span className="text-cyan-300">"time_saved"</span>: <span className="text-emerald-300">"40 hrs/wk"</span>,<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span className="text-cyan-300">"qc_time_saved"</span>: <span className="text-emerald-300">"40 hrs/wk"</span>,<br/>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span className="text-cyan-300">"db_latency_cut"</span>: <span className="text-emerald-300">"45%"</span>,<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span className="text-cyan-300">"efficiency"</span>: <span className="text-emerald-300">"+20%"</span><br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span className="text-cyan-300">"delivery"</span>: <span className="text-emerald-300">"Full-Stack MVC"</span><br/>
                   &nbsp;&nbsp;&nbsp;&nbsp;{`}`}
                 </code>
               </pre>
