@@ -19,72 +19,33 @@ const ParticleBackground = ({ theme = 'space' }) => {
 
     window.addEventListener('resize', handleResize);
 
-    const mouse = {
-      x: null,
-      y: null,
-      radius: 120,
-    };
-
-    const handleMouseMove = (e) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-    };
-
-    const handleMouseLeave = () => {
-      mouse.x = null;
-      mouse.y = null;
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseleave', handleMouseLeave);
-
-    // Particle settings
-    const particleCount = Math.min(Math.floor(window.innerWidth / 16), 85);
+    // GRID DATA PACKETS - Software Engineering Vibe
+    const particleCount = Math.floor(window.innerWidth / 15);
     const particles = [];
-
-    const getColors = () => {
-      if (theme === 'cyberpunk') {
-        return ['#EC4899', '#A855F7', '#00F0FF', '#F43F5E'];
-      }
-      if (theme === 'slate') {
-        return ['#38BDF8', '#60A5FA', '#818CF8', '#94A3B8'];
-      }
-      return ['#00F0FF', '#3B82F6', '#6366F1', '#A855F7'];
-    };
-
-    const colors = getColors();
+    const colors = ['#0ea5e9', '#3b82f6', '#818cf8', '#22d3ee'];
 
     class Particle {
       constructor() {
         this.x = Math.random() * width;
         this.y = Math.random() * height;
-        this.size = Math.random() * 2 + 0.8;
-        this.speedX = (Math.random() - 0.5) * 0.7;
-        this.speedY = (Math.random() - 0.5) * 0.7;
+        this.size = Math.random() * 2 + 1;
+        // Move strictly orthogonal (grid lines)
+        this.dir = Math.random() > 0.5 ? 'h' : 'v';
+        this.speed = (Math.random() * 1.5 + 0.5) * (Math.random() > 0.5 ? 1 : -1);
         this.color = colors[Math.floor(Math.random() * colors.length)];
-        this.alpha = Math.random() * 0.5 + 0.2;
+        this.alpha = Math.random() * 0.5 + 0.3;
       }
 
       update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
+        if (this.dir === 'h') this.x += this.speed;
+        else this.y += this.speed;
 
-        if (this.x > width) this.x = 0;
-        else if (this.x < 0) this.x = width;
-
-        if (this.y > height) this.y = 0;
-        else if (this.y < 0) this.y = height;
-
-        // Mouse attraction/repulsion
-        if (mouse.x !== null && mouse.y !== null) {
-          const dx = mouse.x - this.x;
-          const dy = mouse.y - this.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-          if (distance < mouse.radius) {
-            const force = (mouse.radius - distance) / mouse.radius;
-            this.x -= (dx / distance) * force * 1.5;
-            this.y -= (dy / distance) * force * 1.5;
-          }
+        if (this.x > width) this.x = 0; else if (this.x < 0) this.x = width;
+        if (this.y > height) this.y = 0; else if (this.y < 0) this.y = height;
+        
+        // Data packet 90 deg turns occasionally
+        if (Math.random() < 0.005) {
+           this.dir = this.dir === 'h' ? 'v' : 'h';
         }
       }
 
@@ -94,69 +55,42 @@ const ParticleBackground = ({ theme = 'space' }) => {
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fillStyle = this.color;
         ctx.globalAlpha = this.alpha;
-        ctx.shadowBlur = 8;
+        ctx.shadowBlur = 10;
         ctx.shadowColor = this.color;
         ctx.fill();
         ctx.restore();
       }
     }
 
-    for (let i = 0; i < particleCount; i++) {
-      particles.push(new Particle());
-    }
+    for (let i = 0; i < particleCount; i++) particles.push(new Particle());
 
-    const connectParticles = () => {
-      const maxDistance = 110;
-      for (let a = 0; a < particles.length; a++) {
-        for (let b = a + 1; b < particles.length; b++) {
-          const dx = particles[a].x - particles[b].x;
-          const dy = particles[a].y - particles[b].y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-
-          if (distance < maxDistance) {
-            const opacity = (1 - distance / maxDistance) * 0.18;
-            ctx.save();
-            ctx.beginPath();
-            ctx.strokeStyle = theme === 'cyberpunk' ? '#A855F7' : '#00F0FF';
-            ctx.globalAlpha = opacity;
-            ctx.lineWidth = 0.8;
-            ctx.moveTo(particles[a].x, particles[a].y);
-            ctx.lineTo(particles[b].x, particles[b].y);
-            ctx.stroke();
-            ctx.restore();
-          }
-        }
-
-        // Connect to mouse
-        if (mouse.x !== null && mouse.y !== null) {
-          const dx = particles[a].x - mouse.x;
-          const dy = particles[a].y - mouse.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-          if (distance < 130) {
-            const opacity = (1 - distance / 130) * 0.35;
-            ctx.save();
-            ctx.beginPath();
-            ctx.strokeStyle = '#00F0FF';
-            ctx.globalAlpha = opacity;
-            ctx.lineWidth = 1.2;
-            ctx.moveTo(particles[a].x, particles[a].y);
-            ctx.lineTo(mouse.x, mouse.y);
-            ctx.stroke();
-            ctx.restore();
-          }
-        }
-      }
+    const connectGrid = () => {
+       const maxDistance = 100;
+       for (let a = 0; a < particles.length; a++) {
+         for (let b = a + 1; b < particles.length; b++) {
+           const dx = Math.abs(particles[a].x - particles[b].x);
+           const dy = Math.abs(particles[a].y - particles[b].y);
+           // Only connect if they form a strict grid line (same x or same y) roughly
+           if ((dx < 5 && dy < maxDistance) || (dy < 5 && dx < maxDistance)) {
+             const dist = Math.max(dx, dy);
+             ctx.save();
+             ctx.beginPath();
+             ctx.strokeStyle = '#0ea5e9';
+             ctx.globalAlpha = (1 - dist / maxDistance) * 0.3;
+             ctx.lineWidth = 1;
+             ctx.moveTo(particles[a].x, particles[a].y);
+             ctx.lineTo(particles[b].x, particles[b].y);
+             ctx.stroke();
+             ctx.restore();
+           }
+         }
+       }
     };
 
     const animate = () => {
       ctx.clearRect(0, 0, width, height);
-
-      particles.forEach((p) => {
-        p.update();
-        p.draw();
-      });
-
-      connectParticles();
+      particles.forEach(p => { p.update(); p.draw(); });
+      connectGrid();
       animationFrameId = requestAnimationFrame(animate);
     };
 
@@ -164,19 +98,10 @@ const ParticleBackground = ({ theme = 'space' }) => {
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseleave', handleMouseLeave);
       cancelAnimationFrame(animationFrameId);
     };
   }, [theme]);
 
-  return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-0"
-      style={{ opacity: 0.85 }}
-    />
-  );
+  return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-0 opacity-60" />;
 };
-
 export default ParticleBackground;

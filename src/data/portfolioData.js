@@ -15,7 +15,7 @@ export const PERSONAL_INFO = {
   linkedin: "https://www.linkedin.com/in/aditya-kumar-6440a8429/",
   github: "https://github.com/AADIKANE002",
   leetcode: "https://leetcode.com/",
-  resumePdfUrl: "./Aditya_Kumar_Backend_FullStack_Resume.pdf",
+  resumePdfUrl: "./Aditya_Kumar.pdf",
   resumeDocxUrl: "./Aditya_Kumar_Backend_FullStack_Resume.docx",
   bio: "Software Engineer with 2+ years of experience building Python-based backend, data-processing, and full-stack applications for enterprise clients. Experienced in designing REST-oriented services, PostgreSQL/Oracle-backed data workflows, CI/CD pipelines, containerized deployments, and end-to-end feature delivery from data access through UI. Automated critical data pipelines saving 40+ hours/week and reduced query latency by 45%.",
   stats: [
