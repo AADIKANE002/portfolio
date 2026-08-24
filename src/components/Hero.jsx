@@ -24,6 +24,7 @@ import { PERSONAL_INFO } from '../data/portfolioData';
 import { soundFx } from '../utils/sound';
 import AnimatedCounter from './AnimatedCounter';
 import SpotlightCard from './SpotlightCard';
+import DataCore from './canvas/DataCore';
 
 const CODE_SNIPPETS = {
   api: {
@@ -115,7 +116,14 @@ const HeroTerminal = ({ onOpenTerminal }) => {
   };
 
   return (
-    <div className="relative rounded-3xl border border-white/10 bg-obsidian-900/90 overflow-hidden shadow-2xl shadow-linear-indigo/20 flex flex-col h-[490px] w-full backdrop-blur-2xl group">
+    <motion.div
+      initial={{ opacity: 0, rotateX: 20, rotateY: -10, z: -100 }}
+      animate={{ opacity: 1, rotateX: 0, rotateY: 0, z: 0 }}
+      transition={{ duration: 1.2, type: 'spring', bounce: 0.4 }}
+      whileHover={{ scale: 1.02, rotateY: -5, rotateX: 5 }}
+      style={{ perspective: 1000, transformStyle: 'preserve-3d' }}
+      className="relative rounded-3xl border border-white/10 bg-obsidian-900/70 overflow-hidden shadow-2xl shadow-linear-indigo/20 flex flex-col h-[490px] w-full backdrop-blur-xl group z-20"
+    >
       {/* Linear Rainbow Top Beam */}
       <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-linear-indigo via-linear-cyan via-linear-crimson to-linear-violet opacity-80" />
 
@@ -165,7 +173,7 @@ const HeroTerminal = ({ onOpenTerminal }) => {
       </div>
 
       {/* Code Editor Body */}
-      <div className="flex-1 p-4 font-mono text-xs overflow-y-auto relative bg-obsidian-950/70 leading-relaxed">
+      <div className="flex-1 p-4 font-mono text-xs overflow-y-auto relative bg-obsidian-950/60 leading-relaxed backdrop-blur-md">
         <pre className="text-slate-300">
           <code>
             {CODE_SNIPPETS[activeTab].code.split('\n').map((line, idx) => (
@@ -183,10 +191,10 @@ const HeroTerminal = ({ onOpenTerminal }) => {
         <AnimatePresence>
           {executionResult && (
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              className="mt-4 p-4 rounded-2xl bg-obsidian-900/95 border border-linear-mint/40 shadow-2xl"
+              initial={{ opacity: 0, y: 10, scale: 0.95, rotateX: 10 }}
+              animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
+              exit={{ opacity: 0, y: 10, scale: 0.95 }}
+              className="mt-4 p-4 rounded-2xl bg-obsidian-900/95 border border-linear-mint/40 shadow-2xl origin-bottom"
             >
               <div className="flex items-center justify-between text-xs pb-2 mb-2 border-b border-white/10 font-mono">
                 <span className="text-linear-mint flex items-center gap-1.5 font-bold">
@@ -225,7 +233,7 @@ const HeroTerminal = ({ onOpenTerminal }) => {
           <span>Launch CLI (~)</span>
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -233,19 +241,26 @@ const Hero = ({ onOpenResume, onOpenTerminal, onShowToast }) => {
   return (
     <section
       id="about"
-      className="relative min-h-[92vh] flex items-center pt-28 pb-16 overflow-hidden bg-grid-pattern"
+      className="relative min-h-[100vh] flex items-center pt-28 pb-16 overflow-hidden bg-obsidian-950"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      {/* 3D WebGL Background Overlay */}
+      <DataCore />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10 pointer-events-none">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center pointer-events-auto">
           {/* Left Column (7 cols) */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
+            initial={{ opacity: 0, x: -50, rotateY: 20 }}
+            animate={{ opacity: 1, x: 0, rotateY: 0 }}
+            transition={{ duration: 1.2, ease: 'easeOut', type: 'spring', bounce: 0.3 }}
             className="lg:col-span-7 flex flex-col space-y-6"
+            style={{ perspective: 1000 }}
           >
             {/* Linear / Raycast Rainbow Perimeter Status Pill */}
-            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-white/15 bg-obsidian-900/80 w-fit text-xs font-mono text-slate-200 shadow-xl backdrop-blur-xl relative overflow-hidden group">
+            <motion.div 
+              whileHover={{ scale: 1.05, z: 20 }}
+              className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-white/15 bg-obsidian-900/60 w-fit text-xs font-mono text-slate-200 shadow-xl backdrop-blur-xl relative overflow-hidden group cursor-default"
+            >
               <div className="absolute inset-0 rounded-full bg-gradient-to-r from-linear-violet/20 via-linear-cyan/20 to-linear-crimson/20 opacity-50" />
               <span className="relative flex h-2.5 w-2.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-linear-mint opacity-75" />
@@ -254,13 +269,13 @@ const Hero = ({ onOpenResume, onOpenTerminal, onShowToast }) => {
               <span className="relative z-10 font-medium">
                 Software Engineer @ Genpact • Scalable Python & Distributed Systems
               </span>
-            </div>
+            </motion.div>
 
             {/* High-Impact Headline */}
             <div className="space-y-3">
-              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.08]">
+              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.08] drop-shadow-2xl">
                 Architecting <br />
-                <span className="bg-gradient-to-r from-linear-cyan via-linear-violet to-linear-crimson bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-linear-cyan via-linear-violet to-linear-crimson bg-clip-text text-transparent filter drop-shadow-[0_0_20px_rgba(138,99,246,0.5)]">
                   High-Throughput
                 </span>{' '}
                 Backends.
@@ -283,60 +298,52 @@ const Hero = ({ onOpenResume, onOpenTerminal, onShowToast }) => {
                   wrapper="span"
                   speed={45}
                   repeat={Infinity}
-                  className="text-linear-cyan text-glow-cyan"
+                  className="text-linear-cyan text-glow-cyan drop-shadow-xl"
                 />
               </div>
 
-              <p className="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl pt-2">
+              <p className="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl pt-2 font-medium bg-obsidian-950/40 p-4 rounded-2xl backdrop-blur-sm border border-white/5">
                 {PERSONAL_INFO.bio}
               </p>
             </div>
 
             {/* Linear-Style High Density Bento Telemetry Metrics */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-              <SpotlightCard className="p-4 border-white/10 bg-obsidian-900/80 flex flex-col justify-between">
-                <div className="text-[11px] text-slate-400 font-mono uppercase tracking-wider">Experience</div>
-                <div className="text-2xl font-extrabold text-white font-mono mt-1 bg-gradient-to-r from-linear-cyan to-linear-violet bg-clip-text text-transparent">
-                  <AnimatedCounter value="2+ Years" duration={1.6} />
-                </div>
-                <div className="text-[10px] text-slate-500 font-mono mt-1">Enterprise Production</div>
-              </SpotlightCard>
-
-              <SpotlightCard className="p-4 border-white/10 bg-obsidian-900/80 flex flex-col justify-between">
-                <div className="text-[11px] text-slate-400 font-mono uppercase tracking-wider">LeetCode</div>
-                <div className="text-2xl font-extrabold text-white font-mono mt-1 bg-gradient-to-r from-linear-violet to-linear-crimson bg-clip-text text-transparent">
-                  <AnimatedCounter value="1835" duration={1.6} />
-                </div>
-                <div className="text-[10px] text-slate-500 font-mono mt-1">Top 6.3% Globally</div>
-              </SpotlightCard>
-
-              <SpotlightCard className="p-4 border-white/10 bg-obsidian-900/80 flex flex-col justify-between">
-                <div className="text-[11px] text-slate-400 font-mono uppercase tracking-wider">Latency Cut</div>
-                <div className="text-2xl font-extrabold text-white font-mono mt-1 bg-gradient-to-r from-linear-mint to-linear-cyan bg-clip-text text-transparent">
-                  <AnimatedCounter value="45%" duration={1.6} />
-                </div>
-                <div className="text-[10px] text-slate-500 font-mono mt-1">Oracle DB Tuning</div>
-              </SpotlightCard>
-
-              <SpotlightCard className="p-4 border-white/10 bg-obsidian-900/80 flex flex-col justify-between">
-                <div className="text-[11px] text-slate-400 font-mono uppercase tracking-wider">Time Saved</div>
-                <div className="text-2xl font-extrabold text-white font-mono mt-1 bg-gradient-to-r from-linear-amber to-linear-violet bg-clip-text text-transparent">
-                  <AnimatedCounter value="40 hrs/wk" duration={1.6} />
-                </div>
-                <div className="text-[10px] text-slate-500 font-mono mt-1">Automated Pre-QC</div>
-              </SpotlightCard>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
+              {[
+                { title: 'Experience', val: '2+ Years', sub: 'Enterprise Production', color: 'from-linear-cyan to-linear-violet' },
+                { title: 'LeetCode', val: '1835', sub: 'Top 6.3% Globally', color: 'from-linear-violet to-linear-crimson' },
+                { title: 'Latency Cut', val: '45%', sub: 'Oracle DB Tuning', color: 'from-linear-mint to-linear-cyan' },
+                { title: 'Time Saved', val: '40 hrs/wk', sub: 'Automated Pre-QC', color: 'from-linear-amber to-linear-violet' }
+              ].map((stat, i) => (
+                <motion.div
+                  key={i}
+                  whileHover={{ scale: 1.1, rotateY: 10, rotateX: -10, z: 30 }}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 + i * 0.1 }}
+                  style={{ transformStyle: 'preserve-3d' }}
+                >
+                  <SpotlightCard className="p-4 border-white/10 bg-obsidian-900/60 backdrop-blur-xl flex flex-col justify-between h-full shadow-2xl">
+                    <div className="text-[11px] text-slate-400 font-mono uppercase tracking-wider">{stat.title}</div>
+                    <div className={`text-2xl font-extrabold text-white font-mono mt-1 bg-gradient-to-r ${stat.color} bg-clip-text text-transparent drop-shadow-md`}>
+                      <AnimatedCounter value={stat.val} duration={1.6} />
+                    </div>
+                    <div className="text-[10px] text-slate-500 font-mono mt-1">{stat.sub}</div>
+                  </SpotlightCard>
+                </motion.div>
+              ))}
             </div>
 
             {/* Primary Action Buttons */}
             <div className="flex flex-wrap items-center gap-4 pt-4">
               <motion.button
-                whileHover={{ scale: 1.04, boxShadow: '0px 0px 30px rgba(138,99,246,0.4)' }}
-                whileTap={{ scale: 0.96 }}
+                whileHover={{ scale: 1.05, boxShadow: '0px 0px 40px rgba(138,99,246,0.6)', z: 20 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => {
                   soundFx.playClick();
                   onOpenResume();
                 }}
-                className="flex items-center gap-2 px-6 py-3.5 bg-gradient-to-r from-linear-violet via-linear-indigo to-linear-cyan text-white font-bold rounded-2xl shadow-xl shadow-linear-violet/25 transition-all relative overflow-hidden group"
+                className="flex items-center gap-2 px-6 py-3.5 bg-gradient-to-r from-linear-violet via-linear-indigo to-linear-cyan text-white font-bold rounded-2xl shadow-xl shadow-linear-violet/25 transition-all relative overflow-hidden group border border-white/20"
               >
                 <div className="absolute inset-0 w-full h-full bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out" />
                 <Download className="w-4 h-4" />
@@ -344,13 +351,13 @@ const Hero = ({ onOpenResume, onOpenTerminal, onShowToast }) => {
               </motion.button>
 
               <motion.button
-                whileHover={{ scale: 1.04, backgroundColor: 'rgba(255,255,255,0.08)' }}
-                whileTap={{ scale: 0.96 }}
+                whileHover={{ scale: 1.05, backgroundColor: 'rgba(255,255,255,0.1)', z: 20 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => {
                   soundFx.playBlip();
                   onOpenTerminal();
                 }}
-                className="flex items-center gap-2 px-5 py-3.5 bg-obsidian-900/90 border border-white/15 text-slate-200 font-semibold rounded-2xl transition-all hover:border-linear-cyan hover:text-white shadow-lg"
+                className="flex items-center gap-2 px-5 py-3.5 bg-obsidian-900/70 backdrop-blur-xl border border-white/20 text-slate-200 font-semibold rounded-2xl transition-all hover:border-linear-cyan hover:text-white shadow-xl"
               >
                 <Terminal className="w-4 h-4 text-linear-cyan" />
                 <span>Interactive CLI</span>
@@ -358,36 +365,11 @@ const Hero = ({ onOpenResume, onOpenTerminal, onShowToast }) => {
                   Ctrl+K
                 </kbd>
               </motion.button>
-
-              <a
-                href="#projects"
-                onClick={() => soundFx.playClick()}
-                className="flex items-center gap-1.5 text-sm font-semibold text-slate-300 hover:text-linear-cyan transition-colors px-2 py-2"
-              >
-                <span>Explore Featured Work</span>
-                <ArrowRight className="w-4 h-4" />
-              </a>
-            </div>
-
-            {/* Core Domain Badges */}
-            <div className="pt-4 border-t border-white/10 flex flex-wrap gap-6 text-xs text-slate-400 font-medium font-mono">
-              <div className="flex items-center gap-2">
-                <Server className="w-4 h-4 text-linear-violet" />
-                <span>Scalable Python Backend & REST</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Database className="w-4 h-4 text-linear-cyan" />
-                <span>PostgreSQL / Oracle DB Query Tuning</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <GitBranch className="w-4 h-4 text-linear-mint" />
-                <span>AWS Lambda & Docker CI/CD</span>
-              </div>
             </div>
           </motion.div>
 
           {/* Right Column: Code Window Sandbox (5 cols) */}
-          <div className="lg:col-span-5 relative perspective-1000">
+          <div className="lg:col-span-5 relative">
             <HeroTerminal onOpenTerminal={onOpenTerminal} />
           </div>
         </div>

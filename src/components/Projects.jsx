@@ -35,14 +35,14 @@ const Projects = ({ onSelectProject }) => {
   });
 
   return (
-    <section id="projects" className="py-24 relative overflow-hidden">
+    <section id="projects" className="py-24 relative overflow-hidden" style={{ perspective: 1500 }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Heading */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 50, rotateX: 20 }}
+          whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
           viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 0.8, type: 'spring' }}
           className="flex flex-col items-center text-center mb-14"
         >
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-linear-violet/15 border border-linear-violet/30 text-linear-violet text-xs font-mono font-medium mb-3">
@@ -65,7 +65,7 @@ const Projects = ({ onSelectProject }) => {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search by tech or keyword (e.g. Django, Python, AWS, YOLOv8, Firebase)..."
+                placeholder="Search by tech or keyword (e.g. Django, Python, AWS, YOLOv8)..."
                 className="w-full pl-11 pr-4 py-3 rounded-2xl bg-obsidian-900/90 border border-white/10 text-white placeholder:text-slate-500 text-xs sm:text-sm outline-none focus:border-linear-violet transition-colors backdrop-blur-xl"
               />
               {searchQuery && (
@@ -108,39 +108,42 @@ const Projects = ({ onSelectProject }) => {
           </div>
         </motion.div>
 
-        {/* Linear Bento Grid Projects */}
-        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Linear Bento Grid Projects - Heavy 3D Transitions */}
+        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 gap-8" style={{ perspective: 1200 }}>
           <AnimatePresence>
             {filteredProjects.map((project, index) => (
               <motion.div
                 key={project.id}
                 layout
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
+                initial={{ opacity: 0, scale: 0.8, rotateX: 30, rotateY: index % 2 === 0 ? -20 : 20, z: -200 }}
+                whileInView={{ opacity: 1, scale: 1, rotateX: 0, rotateY: 0, z: 0 }}
+                exit={{ opacity: 0, scale: 0.8, rotateX: -30 }}
+                viewport={{ once: true, margin: '-50px' }}
+                whileHover={{ scale: 1.03, rotateX: -5, rotateY: index % 2 === 0 ? 5 : -5, z: 50 }}
+                transition={{ duration: 0.6, type: 'spring', bounce: 0.4 }}
+                style={{ transformStyle: 'preserve-3d' }}
               >
                 <SpotlightCard
                   spotlightColor="rgba(138, 99, 246, 0.22)"
                   borderColor="rgba(138, 99, 246, 0.5)"
-                  className="h-full flex flex-col group border-white/10 hover:border-linear-violet/50 bg-obsidian-900/90"
+                  className="h-full flex flex-col group border-white/10 hover:border-linear-violet/50 bg-obsidian-900/90 shadow-2xl overflow-hidden"
                 >
                   {/* Image & Header Overlay */}
-                  <div className="relative h-60 sm:h-64 overflow-hidden rounded-t-2xl">
+                  <div className="relative h-60 sm:h-64 overflow-hidden rounded-t-2xl z-10" style={{ transform: 'translateZ(30px)' }}>
                     <img
                       src={project.image}
                       alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-obsidian-950 via-obsidian-950/60 to-transparent" />
 
                     {/* Badges on image */}
                     <div className="absolute top-4 left-4 flex items-center gap-2">
-                      <span className="px-3 py-1 text-xs font-mono font-semibold rounded-full bg-obsidian-900/90 text-linear-cyan border border-linear-cyan/30 backdrop-blur-md">
+                      <span className="px-3 py-1 text-xs font-mono font-semibold rounded-full bg-obsidian-900/90 text-linear-cyan border border-linear-cyan/30 backdrop-blur-md shadow-lg">
                         {project.category}
                       </span>
                       {project.featured && (
-                        <span className="px-2.5 py-1 text-xs font-semibold rounded-full bg-linear-amber/20 text-linear-amber border border-linear-amber/30 backdrop-blur-md flex items-center gap-1">
+                        <span className="px-2.5 py-1 text-xs font-semibold rounded-full bg-linear-amber/20 text-linear-amber border border-linear-amber/30 backdrop-blur-md flex items-center gap-1 shadow-lg">
                           <Sparkles className="w-3 h-3" />
                           Featured Innovation
                         </span>
@@ -156,7 +159,7 @@ const Projects = ({ onSelectProject }) => {
                         e.stopPropagation();
                         soundFx.playClick();
                       }}
-                      className="absolute top-4 right-4 p-2.5 rounded-xl bg-obsidian-900/90 hover:bg-obsidian-850 text-slate-300 hover:text-linear-cyan border border-white/15 backdrop-blur-md transition-all hover:scale-110"
+                      className="absolute top-4 right-4 p-2.5 rounded-xl bg-obsidian-900/90 hover:bg-obsidian-850 text-slate-300 hover:text-linear-cyan border border-white/15 backdrop-blur-md transition-all hover:scale-110 shadow-lg"
                       title="View GitHub Repository"
                     >
                       <GithubIcon className="w-4 h-4" />
@@ -164,7 +167,7 @@ const Projects = ({ onSelectProject }) => {
 
                     {/* Bottom Title on Image */}
                     <div className="absolute bottom-4 left-4 right-4">
-                      <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight group-hover:text-linear-cyan transition-colors">
+                      <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight group-hover:text-linear-cyan transition-colors drop-shadow-md">
                         {project.title}
                       </h3>
                       <p className="text-xs sm:text-sm text-slate-300 line-clamp-1 mt-0.5 font-medium">
@@ -174,7 +177,7 @@ const Projects = ({ onSelectProject }) => {
                   </div>
 
                   {/* Content Body */}
-                  <div className="p-6 flex-1 flex flex-col justify-between">
+                  <div className="p-6 flex-1 flex flex-col justify-between z-20" style={{ transform: 'translateZ(40px)' }}>
                     <p className="text-slate-400 text-sm leading-relaxed mb-5">
                       {project.description}
                     </p>
