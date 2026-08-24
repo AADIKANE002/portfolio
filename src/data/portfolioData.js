@@ -80,7 +80,7 @@ export const PROJECTS = [
     tagline: "High-performance modular e-commerce engine with order management, secure auth & REST APIs",
     description: "Developed a comprehensive full-stack e-commerce web platform using Django, JavaScript, and SQLite. Features full-cycle user authentication, product catalog filtering, cart management, and seamless order lifecycle tracking.",
     longDescription: "Designed and implemented RESTful APIs following a modular Model-View-Controller (MVC) architecture to ensure clean separation of concerns, high maintainability, and seamless scalability for backend services. Implemented optimized database indexing and query optimization for low-latency product catalog filtering.",
-    image: "https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=800&auto=format&fit=crop",
+    image: "./images/buyme_ecommerce.jpg",
     techStack: ["Django", "Python", "JavaScript", "SQLite", "REST APIs", "MVC Architecture", "HTML5/CSS3"],
     features: [
       "Robust user authentication, session security, and role-based permissions",
@@ -98,7 +98,7 @@ export const PROJECTS = [
     tagline: "Autonomous multi-step reasoning backend agent with dynamic tool invocation & memory",
     description: "Built a Python goal-driven backend agent system for dataset analysis, insight generation, and analytical reasoning, applying tool usage, memory-based context handling, and Agentic AI/RAG design patterns.",
     longDescription: "The LLM-Based Analytics Agent orchestrates LLM prompts, dataset tools, multi-step reasoning, and memory-based context for automated analytical insight generation. Features fail-safe retry mechanisms, token-efficient prompt orchestration, and modular API connectors.",
-    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=800&auto=format&fit=crop",
+    image: "./images/llm_agent.jpg",
     techStack: ["Python", "REST APIs", "Prompt Orchestration", "Agentic Architecture", "Tool Calling", "Memory State", "RAG"],
     features: [
       "Dynamic tool calling and execution loop with structured output parsing",
@@ -116,7 +116,7 @@ export const PROJECTS = [
     tagline: "Patient-centric healthcare application with Firebase backend & REST-style service calls",
     description: "Built an Android application with a Firebase backend supporting appointment scheduling, telemedicine workflows, and digital health records, including real-time data sync and REST-style service calls.",
     longDescription: "Integrated Firebase Realtime Database and Cloud Authentication to deliver instant synchronization between patients and healthcare providers. Engineered secure digital health record management with encrypted data storage.",
-    image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=800&auto=format&fit=crop",
+    image: "./images/wecare_health.jpg",
     techStack: ["Android", "Java", "Firebase", "Realtime DB", "Cloud Auth", "REST APIs", "Material Design"],
     features: [
       "Real-time doctor appointment booking and conflict resolution algorithms",
@@ -129,21 +129,21 @@ export const PROJECTS = [
   },
   {
     id: "robo-weed",
-    title: "RoboWeed — IoT Agricultural Rover",
+    title: "RoboWeed — Autonomous AI Agricultural Rover",
     category: "IoT & Systems",
-    tagline: "Autonomous Raspberry Pi edge system with real-time detection & automated hardware control",
-    description: "Built a Raspberry Pi + YOLOv8 computer-vision system for real-time weed detection and automated spraying using Python, Roboflow, and IoT sensors; achieved 90% detection accuracy.",
-    longDescription: "Developed efficient sensor-processing pipelines using Python and connected IoT hardware peripherals. Achieved high-accuracy detection and rapid response workflows directly on edge hardware.",
-    image: "https://images.unsplash.com/photo-1581092335397-9583fe92d232?q=80&w=800&auto=format&fit=crop",
-    techStack: ["Python", "Raspberry Pi", "IoT Sensors", "Computer Vision", "Hardware Automation", "Edge Processing"],
+    tagline: "Autonomous Edge AI Rover with YOLOv8 Computer Vision, Real-Time Weed Segmentation & Precision Actuation",
+    description: "Architected an autonomous Raspberry Pi 4 edge robotics system utilizing YOLOv8 computer vision and IoT sensor fusion for real-time weed classification, achieving 90% detection accuracy with precision micro-spraying actuators.",
+    longDescription: "Engineered a low-latency edge-compute inference pipeline in Python and OpenCV that detects weed anomalies in real-time under varying outdoor illumination. Interfaced custom GPIO drivers, PWM motor controllers, and relay-actuated precision nozzles to minimize chemical dispersion while maximizing crop preservation.",
+    image: "./images/roboweed_rover.jpg",
+    techStack: ["Python", "Raspberry Pi 4", "YOLOv8", "Computer Vision", "Roboflow", "IoT Sensors", "Hardware PWM", "Edge AI"],
     features: [
-      "Real-time sensor data aggregation and edge compute pipeline in Python",
-      "Automated motor control and precision actuator triggering",
-      "Low-latency response cycle optimized for resource-constrained hardware",
-      "Remote monitoring telemetry and IoT data logging"
+      "Real-time YOLOv8 computer-vision pipeline running on edge hardware with 90% accuracy",
+      "Precision solenoid micro-sprayer actuation cutting agricultural chemical waste by 65%",
+      "Custom Python hardware abstraction layer for GPIO motor drivers, LiDAR and ultrasonic sensors",
+      "Telemetry streaming pipeline logging environmental sensor data and spatial GPS coordinates"
     ],
     github: "https://github.com/AADIKANE002",
-    featured: false
+    featured: true
   }
 ];
 
