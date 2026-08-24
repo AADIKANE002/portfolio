@@ -27,8 +27,21 @@ export default {
         }
       },
       backgroundImage: {
-        'grid-pattern': "url(\"data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h40v40H0V0zm20 20h20v20H20V20zM0 20h20v20H0V20zM20 0h20v20H20V0z' fill='%2330363d' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E\")",
-      }
+        'grid-pattern': "url(\"data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h40v40H0V0zm20 20h20v20H20V20zM0 20h20v20H0V20zM20 0h20v20H0V20z' fill='%2330363d' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E\")",
+      },
+      backgroundSize: {
+        '300%': '300%',
+      },
+      animation: {
+        'gradient': 'animatedgradient 6s ease infinite alternate',
+      },
+      keyframes: {
+        animatedgradient: {
+          '0%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+          '100%': { backgroundPosition: '0% 50%' },
+        },
+      },
     },
   },
   plugins: [],
