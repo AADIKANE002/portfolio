@@ -54,7 +54,7 @@ const ExperienceCard = ({ exp, index }) => {
 
             {/* Accomplishments */}
             <ul className="space-y-3 mb-6" style={{ transform: 'translateZ(25px)' }}>
-              {exp.achievements.map((item, i) => (
+              {exp.highlights && exp.highlights.map((item, i) => (
                 <li key={i} className="flex items-start gap-3 text-slate-300 text-sm sm:text-base leading-relaxed">
                   <ArrowRight className="w-4 h-4 mt-1 text-linear-cyan flex-shrink-0" />
                   <span dangerouslySetInnerHTML={{ __html: item }} />
@@ -64,7 +64,7 @@ const ExperienceCard = ({ exp, index }) => {
 
             {/* Tech Stack */}
             <div className="flex flex-wrap gap-2 pt-4 border-t border-white/10" style={{ transform: 'translateZ(30px)' }}>
-              {exp.tech.map((tech, i) => (
+              {exp.skills && exp.skills.map((tech, i) => (
                 <span
                   key={i}
                   className="px-2.5 py-1 text-xs font-mono font-medium rounded-lg bg-obsidian-950 border border-white/5 text-slate-400 group-hover:border-linear-cyan/30 group-hover:text-linear-cyan transition-colors"
