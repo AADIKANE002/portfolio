@@ -4,86 +4,30 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  darkMode: 'class',
   theme: {
     extend: {
-      colors: {
-        space: {
-          950: '#030712',
-          900: '#0B0F19',
-          850: '#111827',
-          800: '#1F2937',
-          700: '#374151',
-        },
-        cyber: {
-          cyan: '#00F0FF',
-          blue: '#3B82F6',
-          purple: '#A855F7',
-          pink: '#EC4899',
-          emerald: '#10B981',
-          amber: '#F59E0B'
-        }
-      },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Fira Code', 'Cascadia Code', 'monospace']
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        mono: ['"Fira Code"', '"JetBrains Mono"', 'monospace'],
       },
-      animation: {
-        'gradient-x': 'gradient-x 15s ease infinite',
-        'gradient-y': 'gradient-y 15s ease infinite',
-        'gradient-xy': 'gradient-xy 15s ease infinite',
-        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'float': 'float 6s ease-in-out infinite',
-        'float-slow': 'float 9s ease-in-out infinite',
-        'glow': 'glow 2s ease-in-out infinite alternate',
-        'spin-slow': 'spin 20s linear infinite',
-      },
-      keyframes: {
-        'gradient-y': {
-          '0%, 100%': {
-            'background-size': '400% 400%',
-            'background-position': 'center top'
-          },
-          '50%': {
-            'background-size': '200% 200%',
-            'background-position': 'center bottom'
-          }
-        },
-        'gradient-x': {
-          '0%, 100%': {
-            'background-size': '200% 200%',
-            'background-position': 'left center'
-          },
-          '50%': {
-            'background-size': '200% 200%',
-            'background-position': 'right center'
-          }
-        },
-        'gradient-xy': {
-          '0%, 100%': {
-            'background-size': '400% 400%',
-            'background-position': 'left center'
-          },
-          '50%': {
-            'background-size': '200% 200%',
-            'background-position': 'right center'
-          }
-        },
-        float: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-15px)' },
-        },
-        glow: {
-          '0%': { boxShadow: '0 0 15px rgba(0, 240, 255, 0.3)' },
-          '100%': { boxShadow: '0 0 30px rgba(0, 240, 255, 0.7), 0 0 10px rgba(168, 85, 247, 0.5)' },
+      colors: {
+        ide: {
+          bg: '#0d1117',
+          surface: '#161b22',
+          border: '#30363d',
+          text: '#c9d1d9',
+          muted: '#8b949e',
+          primary: '#58a6ff',
+          success: '#3fb950',
+          warning: '#d29922',
+          danger: '#f85149',
+          keyword: '#ff7b72',
+          string: '#a5d6ff',
+          function: '#d2a8ff',
         }
       },
-      boxShadow: {
-        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
-        'neon-cyan': '0 0 20px rgba(0, 240, 255, 0.4)',
-        'neon-purple': '0 0 20px rgba(168, 85, 247, 0.4)',
-        'neon-blue': '0 0 20px rgba(59, 130, 246, 0.4)',
-        'glow-box': '0 0 40px -10px rgba(0, 240, 255, 0.3)'
+      backgroundImage: {
+        'grid-pattern': "url(\"data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h40v40H0V0zm20 20h20v20H20V20zM0 20h20v20H0V20zM20 0h20v20H20V0z' fill='%2330363d' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E\")",
       }
     },
   },
