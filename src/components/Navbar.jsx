@@ -10,7 +10,8 @@ import {
   FileText,
   Search,
   Sparkles,
-  Command
+  Command,
+  Zap
 } from 'lucide-react';
 import { soundFx } from '../utils/sound';
 import { PERSONAL_INFO } from '../data/portfolioData';
@@ -38,12 +39,10 @@ const Navbar = ({
     { label: 'Contact', href: '#contact', id: 'contact' },
   ];
 
-  // Scroll listener for blur & active section spy
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
 
-      // Section spy
       const sections = navLinks.map((l) => document.getElementById(l.id));
       const scrollPos = window.scrollY + 180;
 
@@ -72,17 +71,17 @@ const Navbar = ({
   };
 
   const themes = [
-    { id: 'space', label: 'Dark Space', color: 'bg-cyan-500' },
-    { id: 'cyberpunk', label: 'Cyberpunk', color: 'bg-pink-500' },
-    { id: 'emerald', label: 'Emerald Matrix', color: 'bg-emerald-500' },
-    { id: 'slate', label: 'Deep Slate', color: 'bg-sky-400' }
+    { id: 'space', label: 'Linear Ultraviolet', color: 'bg-linear-violet' },
+    { id: 'cyberpunk', label: 'Raycast Crimson', color: 'bg-linear-crimson' },
+    { id: 'emerald', label: 'Emerald Matrix', color: 'bg-linear-mint' },
+    { id: 'slate', label: 'Stripe Prism', color: 'bg-linear-cyan' }
   ];
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
         scrolled
-          ? 'py-3 bg-space-950/85 backdrop-blur-xl border-b border-white/10 shadow-xl shadow-black/40'
+          ? 'py-3 bg-obsidian-950/85 backdrop-blur-2xl border-b border-white/10 shadow-2xl shadow-black/50'
           : 'py-5 bg-transparent'
       }`}
     >
@@ -93,18 +92,18 @@ const Navbar = ({
           onClick={() => soundFx.playClick()}
           className="group flex items-center gap-2.5 text-xl font-bold tracking-tight text-white focus:outline-none"
         >
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-500 via-teal-400 to-blue-600 flex items-center justify-center text-black font-extrabold shadow-lg shadow-cyan-500/25 group-hover:scale-105 transition-transform">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-linear-violet via-linear-indigo to-linear-cyan flex items-center justify-center text-white font-extrabold shadow-lg shadow-linear-violet/30 group-hover:scale-105 transition-transform">
             AK
           </div>
           <span className="font-mono text-sm sm:text-base">
-            <span className="text-cyan-400">&lt;</span>
+            <span className="text-linear-cyan">&lt;</span>
             Aditya
-            <span className="text-cyan-400">.dev /&gt;</span>
+            <span className="text-linear-violet">.dev /&gt;</span>
           </span>
         </a>
 
-        {/* Desktop Navigation Links with animated active pill */}
-        <nav className="hidden md:flex items-center gap-1 bg-space-900/70 p-1.5 rounded-full border border-white/10 backdrop-blur-md">
+        {/* Desktop Navigation Links */}
+        <nav className="hidden md:flex items-center gap-1 bg-obsidian-900/80 p-1.5 rounded-full border border-white/10 backdrop-blur-xl shadow-inner">
           {navLinks.map((link) => {
             const isActive = activeSection === link.id;
             return (
@@ -113,13 +112,13 @@ const Navbar = ({
                 href={link.href}
                 onClick={() => handleNavClick(link.href, link.id)}
                 className={`relative px-3.5 py-1.5 text-xs lg:text-sm font-medium rounded-full transition-colors ${
-                  isActive ? 'text-white font-semibold' : 'text-slate-400 hover:text-slate-200'
+                  isActive ? 'text-white font-bold' : 'text-slate-400 hover:text-slate-200'
                 }`}
               >
                 {isActive && (
                   <motion.div
                     layoutId="activeNavPill"
-                    className="absolute inset-0 rounded-full bg-cyan-500/20 border border-cyan-500/40"
+                    className="absolute inset-0 rounded-full bg-linear-violet/20 border border-linear-violet/40 shadow-sm"
                     transition={{ type: 'spring', stiffness: 350, damping: 30 }}
                   />
                 )}
@@ -129,20 +128,20 @@ const Navbar = ({
           })}
         </nav>
 
-        {/* Action Controls (Command Palette, Terminal, Sound, Theme, Resume) */}
+        {/* Action Controls */}
         <div className="hidden lg:flex items-center gap-2.5">
-          {/* Quick Search / Command Palette (Ctrl+K) */}
+          {/* Raycast-style Command Palette Trigger */}
           <button
             onClick={() => {
               soundFx.playBlip();
               onOpenCommandPalette();
             }}
             title="Search & Quick Actions (Ctrl+K)"
-            className="flex items-center gap-2 px-3 py-1.5 text-xs font-mono rounded-lg bg-space-900/80 border border-white/10 text-slate-400 hover:text-cyan-300 hover:border-cyan-500/40 transition-all shadow-sm group"
+            className="flex items-center gap-2 px-3 py-1.5 text-xs font-mono rounded-xl bg-obsidian-900/90 border border-white/10 text-slate-300 hover:text-linear-cyan hover:border-linear-violet/40 transition-all shadow-sm group"
           >
-            <Search className="w-3.5 h-3.5 text-cyan-400 group-hover:scale-110 transition-transform" />
+            <Search className="w-3.5 h-3.5 text-linear-violet group-hover:scale-110 transition-transform" />
             <span>Search</span>
-            <kbd className="px-1.5 py-0.5 text-[10px] bg-space-950 rounded border border-white/10 text-slate-400">
+            <kbd className="px-1.5 py-0.5 text-[10px] bg-obsidian-950 rounded border border-white/10 text-slate-400">
               ⌘K
             </kbd>
           </button>
@@ -154,11 +153,11 @@ const Navbar = ({
               onOpenTerminal();
             }}
             title="Open Interactive CLI Terminal (~)"
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-medium rounded-lg bg-space-900/80 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/10 hover:border-cyan-400 transition-all shadow-sm"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-semibold rounded-xl bg-obsidian-900/90 border border-linear-cyan/30 text-linear-cyan hover:bg-linear-cyan/10 hover:border-linear-cyan transition-all shadow-sm"
           >
             <TerminalIcon className="w-3.5 h-3.5" />
             <span>CLI</span>
-            <kbd className="hidden xl:inline px-1 py-0.5 text-[10px] bg-space-950 rounded border border-cyan-500/20 text-slate-400">
+            <kbd className="hidden xl:inline px-1 py-0.5 text-[10px] bg-obsidian-950 rounded border border-linear-cyan/20 text-slate-400">
               ~
             </kbd>
           </button>
@@ -167,10 +166,10 @@ const Navbar = ({
           <button
             onClick={handleSoundToggle}
             title={soundEnabled ? 'Disable Audio FX' : 'Enable Audio FX'}
-            className={`p-2 rounded-lg border transition-all ${
+            className={`p-2 rounded-xl border transition-all ${
               soundEnabled
-                ? 'bg-cyan-500/20 border-cyan-500/40 text-cyan-400 shadow-sm'
-                : 'bg-space-900/80 border-white/10 text-slate-400 hover:text-slate-200'
+                ? 'bg-linear-violet/20 border-linear-violet/40 text-linear-violet shadow-sm'
+                : 'bg-obsidian-900/90 border-white/10 text-slate-400 hover:text-slate-200'
             }`}
           >
             {soundEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
@@ -184,7 +183,7 @@ const Navbar = ({
                 setThemeDropdownOpen(!themeDropdownOpen);
               }}
               title="Change Visual Theme"
-              className="p-2 rounded-lg bg-space-900/80 border border-white/10 text-slate-400 hover:text-slate-200 transition-all"
+              className="p-2 rounded-xl bg-obsidian-900/90 border border-white/10 text-slate-400 hover:text-slate-200 transition-all"
             >
               <Palette className="w-4 h-4" />
             </button>
@@ -195,10 +194,10 @@ const Navbar = ({
                   initial={{ opacity: 0, scale: 0.95, y: 5 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95, y: 5 }}
-                  className="absolute right-0 mt-2 w-40 py-2 bg-space-900/95 border border-white/15 rounded-xl shadow-2xl backdrop-blur-xl z-50"
+                  className="absolute right-0 mt-2 w-44 py-2 bg-obsidian-900/95 border border-white/15 rounded-2xl shadow-2xl backdrop-blur-2xl z-50"
                 >
                   <div className="px-3 py-1 text-[10px] font-mono text-slate-500 uppercase tracking-wider">
-                    Select Theme
+                    Select Design Theme
                   </div>
                   {themes.map((t) => (
                     <button
@@ -209,7 +208,7 @@ const Navbar = ({
                         setThemeDropdownOpen(false);
                       }}
                       className={`w-full px-3 py-1.5 flex items-center gap-2.5 text-xs text-left hover:bg-white/5 transition-colors ${
-                        currentTheme === t.id ? 'text-cyan-400 font-semibold bg-cyan-500/10' : 'text-slate-300'
+                        currentTheme === t.id ? 'text-linear-cyan font-bold bg-linear-violet/10' : 'text-slate-300'
                       }`}
                     >
                       <span className={`w-2.5 h-2.5 rounded-full ${t.color}`} />
@@ -227,7 +226,7 @@ const Navbar = ({
               soundFx.playClick();
               onOpenResume();
             }}
-            className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black shadow-lg shadow-cyan-500/25 transition-all hover:scale-105 active:scale-95"
+            className="flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-xl bg-gradient-to-r from-linear-violet via-linear-indigo to-linear-cyan hover:from-linear-violet/90 hover:to-linear-cyan/90 text-white shadow-lg shadow-linear-violet/25 transition-all hover:scale-105 active:scale-95"
           >
             <FileText className="w-3.5 h-3.5" />
             <span>Resume</span>
@@ -241,7 +240,7 @@ const Navbar = ({
               soundFx.playBlip();
               onOpenCommandPalette();
             }}
-            className="p-2 rounded-lg bg-space-900 border border-white/10 text-cyan-400"
+            className="p-2 rounded-xl bg-obsidian-900 border border-white/10 text-linear-cyan"
             title="Search"
           >
             <Search className="w-4 h-4" />
@@ -249,21 +248,10 @@ const Navbar = ({
 
           <button
             onClick={() => {
-              soundFx.playBlip();
-              onOpenTerminal();
-            }}
-            className="p-2 rounded-lg bg-space-900 border border-cyan-500/30 text-cyan-400"
-            title="Open CLI"
-          >
-            <TerminalIcon className="w-4 h-4" />
-          </button>
-
-          <button
-            onClick={() => {
               soundFx.playClick();
               setMobileMenuOpen(!mobileMenuOpen);
             }}
-            className="p-2 rounded-lg bg-space-900 border border-white/10 text-slate-300"
+            className="p-2 rounded-xl bg-obsidian-900 border border-white/10 text-slate-300"
             aria-label="Toggle menu"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -278,7 +266,7 @@ const Navbar = ({
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden px-4 pt-3 pb-6 bg-space-950/95 border-b border-white/10 backdrop-blur-2xl transition-all"
+            className="md:hidden px-4 pt-3 pb-6 bg-obsidian-950/95 border-b border-white/10 backdrop-blur-2xl transition-all"
           >
             <div className="flex flex-col gap-2">
               {navLinks.map((link) => (
@@ -286,9 +274,9 @@ const Navbar = ({
                   key={link.label}
                   href={link.href}
                   onClick={() => handleNavClick(link.href, link.id)}
-                  className={`px-4 py-2.5 text-base font-medium rounded-lg transition-all ${
+                  className={`px-4 py-2.5 text-base font-medium rounded-xl transition-all ${
                     activeSection === link.id
-                      ? 'bg-cyan-500/15 text-cyan-400 font-bold border border-cyan-500/30'
+                      ? 'bg-linear-violet/15 text-linear-cyan font-bold border border-linear-violet/30'
                       : 'text-slate-300 hover:bg-white/5'
                   }`}
                 >
@@ -303,7 +291,7 @@ const Navbar = ({
                     onOpenResume();
                     setMobileMenuOpen(false);
                   }}
-                  className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 text-sm font-semibold rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-black shadow-lg"
+                  className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 text-sm font-semibold rounded-xl bg-gradient-to-r from-linear-violet to-linear-cyan text-white shadow-lg"
                 >
                   <FileText className="w-4 h-4" />
                   <span>Resume PDF</span>
@@ -311,7 +299,7 @@ const Navbar = ({
 
                 <button
                   onClick={handleSoundToggle}
-                  className="p-2.5 rounded-lg bg-space-900 border border-white/10 text-slate-300"
+                  className="p-2.5 rounded-xl bg-obsidian-900 border border-white/10 text-slate-300"
                 >
                   {soundEnabled ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5" />}
                 </button>

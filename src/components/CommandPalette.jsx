@@ -167,10 +167,10 @@ const CommandPalette = ({
     },
     {
       id: 'theme-space',
-      title: 'Theme: Dark Space',
+      title: 'Theme: Linear Ultraviolet',
       category: 'Themes',
       icon: Palette,
-      badge: 'Default',
+      badge: 'Linear',
       action: () => {
         setTheme('space');
         onClose();
@@ -178,10 +178,10 @@ const CommandPalette = ({
     },
     {
       id: 'theme-cyberpunk',
-      title: 'Theme: Cyberpunk Neon',
+      title: 'Theme: Raycast Crimson',
       category: 'Themes',
       icon: Palette,
-      badge: 'Neon',
+      badge: 'Raycast',
       action: () => {
         setTheme('cyberpunk');
         onClose();
@@ -200,10 +200,10 @@ const CommandPalette = ({
     },
     {
       id: 'theme-slate',
-      title: 'Theme: Deep Slate',
+      title: 'Theme: Stripe Prism',
       category: 'Themes',
       icon: Palette,
-      badge: 'Slate',
+      badge: 'Stripe',
       action: () => {
         setTheme('slate');
         onClose();

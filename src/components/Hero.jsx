@@ -16,11 +16,14 @@ import {
   Zap,
   Activity,
   Cpu,
-  Layers
+  Layers,
+  TrendingUp,
+  ShieldCheck
 } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { soundFx } from '../utils/sound';
 import AnimatedCounter from './AnimatedCounter';
+import SpotlightCard from './SpotlightCard';
 
 const CODE_SNIPPETS = {
   api: {
@@ -29,11 +32,11 @@ const CODE_SNIPPETS = {
     code: `from fastapi import FastAPI, Depends, Query
 from services.analytics import DatasetOptimizer
 
-app = FastAPI(title="Aditya Backend API", version="2.4.0")
+app = FastAPI(title="Enterprise Analytics API", version="2.4.0")
 
 @app.get("/api/v1/analytics/query-metrics")
 async def get_performance_metrics(tenant_id: str = Query(...)):
-    """Optimized data pipeline with 45% reduced latency."""
+    """High-throughput pipeline with 45% reduced latency."""
     engine = DatasetOptimizer(tenant_id=tenant_id)
     report = await engine.execute_optimized_pipeline()
     return {
@@ -41,8 +44,8 @@ async def get_performance_metrics(tenant_id: str = Query(...)):
         "latency_ms": 24,
         "latency_cut": "45%",
         "time_saved": "40 hrs/week",
-        "candidate": "Aditya Kumar",
-        "roles": ["Backend", "Full-Stack", "Distributed Systems"]
+        "engineer": "Aditya Kumar",
+        "stack": ["Python", "Django", "AWS Lambda", "Oracle DB"]
     }`
   },
   sql: {
@@ -63,7 +66,7 @@ GROUP BY geo_code;`
     filename: 'analytics_agent.py',
     language: 'Agentic AI',
     code: `class AnalyticsAgent:
-    """Multi-step reasoning backend agent with tool execution."""
+    """Autonomous multi-step reasoning agent with memory."""
     def __init__(self, memory_store, tools_registry):
         self.memory = memory_store
         self.tools = tools_registry
@@ -102,34 +105,31 @@ const HeroTerminal = ({ onOpenTerminal }) => {
         time: '24ms',
         payload: {
           status: 'success',
-          candidate: 'Aditya Kumar',
-          specialization: 'Python & Django Architecture',
-          enterprise_impact: 'Saved 40 hrs/wk & -45% DB latency',
-          availability: 'Immediate / Open for full-time'
+          engineer: 'Aditya Kumar',
+          specialization: 'Python Backend & Cloud Architecture',
+          enterprise_impact: 'Saved 40 hrs/wk & -45% DB Latency at Genpact',
+          availability: 'Open for Backend & Full-Stack Opportunities'
         }
       });
-    }, 700);
+    }, 600);
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.96, y: 20 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: 'easeOut' }}
-      className="relative rounded-2xl border border-cyan-500/30 bg-space-950/90 overflow-hidden shadow-2xl shadow-cyan-500/10 flex flex-col h-[480px] w-full backdrop-blur-xl"
-    >
+    <div className="relative rounded-3xl border border-white/10 bg-obsidian-900/90 overflow-hidden shadow-2xl shadow-linear-indigo/20 flex flex-col h-[490px] w-full backdrop-blur-2xl group">
+      {/* Linear Rainbow Top Beam */}
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-linear-indigo via-linear-cyan via-linear-crimson to-linear-violet opacity-80" />
+
       {/* Terminal Title Bar & Code Tabs */}
-      <div className="bg-space-900/90 px-4 py-2.5 border-b border-white/10 flex flex-wrap items-center justify-between gap-2 select-none">
-        {/* Window controls */}
+      <div className="bg-obsidian-950/90 px-4 py-3 border-b border-white/10 flex flex-wrap items-center justify-between gap-2 select-none">
         <div className="flex items-center gap-2">
-          <div className="flex gap-1.5">
-            <div className="w-3 h-3 rounded-full bg-rose-500/80" />
-            <div className="w-3 h-3 rounded-full bg-amber-500/80" />
-            <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
+          <div className="flex gap-1.5 mr-2">
+            <div className="w-3 h-3 rounded-full bg-linear-crimson/80" />
+            <div className="w-3 h-3 rounded-full bg-linear-amber/80" />
+            <div className="w-3 h-3 rounded-full bg-linear-mint/80" />
           </div>
 
           {/* Tab buttons */}
-          <div className="flex items-center gap-1 ml-3">
+          <div className="flex items-center gap-1">
             {Object.keys(CODE_SNIPPETS).map((tabKey) => {
               const isActive = activeTab === tabKey;
               return (
@@ -140,13 +140,13 @@ const HeroTerminal = ({ onOpenTerminal }) => {
                     setActiveTab(tabKey);
                     setExecutionResult(null);
                   }}
-                  className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono transition-all ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono transition-all ${
                     isActive
-                      ? 'bg-space-950 text-cyan-400 border border-cyan-500/30 shadow-sm font-semibold'
+                      ? 'bg-obsidian-850 text-white border border-linear-violet/40 shadow-sm font-semibold'
                       : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
                   }`}
                 >
-                  <FileCode className="w-3 h-3" />
+                  <FileCode className={`w-3.5 h-3.5 ${isActive ? 'text-linear-cyan' : 'text-slate-500'}`} />
                   <span>{CODE_SNIPPETS[tabKey].filename}</span>
                 </button>
               );
@@ -154,20 +154,18 @@ const HeroTerminal = ({ onOpenTerminal }) => {
           </div>
         </div>
 
-        {/* Action icons */}
-        <div className="flex items-center gap-2">
-          <button
-            onClick={handleCopy}
-            title="Copy snippet"
-            className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-cyan-400 transition-colors"
-          >
-            {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-          </button>
-        </div>
+        {/* Copy snippet button */}
+        <button
+          onClick={handleCopy}
+          title="Copy code snippet"
+          className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-linear-cyan transition-colors"
+        >
+          {copied ? <Check className="w-3.5 h-3.5 text-linear-mint" /> : <Copy className="w-3.5 h-3.5" />}
+        </button>
       </div>
 
       {/* Code Editor Body */}
-      <div className="flex-1 p-4 font-mono text-xs overflow-y-auto relative bg-space-950/60 leading-relaxed">
+      <div className="flex-1 p-4 font-mono text-xs overflow-y-auto relative bg-obsidian-950/70 leading-relaxed">
         <pre className="text-slate-300">
           <code>
             {CODE_SNIPPETS[activeTab].code.split('\n').map((line, idx) => (
@@ -181,23 +179,23 @@ const HeroTerminal = ({ onOpenTerminal }) => {
           </code>
         </pre>
 
-        {/* Live Execution Output Modal */}
+        {/* Interactive Response Payload */}
         <AnimatePresence>
           {executionResult && (
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
-              className="mt-4 p-3.5 rounded-xl bg-space-900/95 border border-emerald-500/40 shadow-xl"
+              className="mt-4 p-4 rounded-2xl bg-obsidian-900/95 border border-linear-mint/40 shadow-2xl"
             >
               <div className="flex items-center justify-between text-xs pb-2 mb-2 border-b border-white/10 font-mono">
-                <span className="text-emerald-400 flex items-center gap-1.5 font-bold">
+                <span className="text-linear-mint flex items-center gap-1.5 font-bold">
                   <Activity className="w-3.5 h-3.5" />
-                  <span>HTTP 200 OK • Response Received</span>
+                  <span>HTTP 200 OK • Microservice Response</span>
                 </span>
-                <span className="text-slate-400">RTT: {executionResult.time}</span>
+                <span className="text-slate-400 font-mono">RTT: {executionResult.time}</span>
               </div>
-              <pre className="text-[11px] text-cyan-200 overflow-x-auto">
+              <pre className="text-[11px] text-linear-cyan overflow-x-auto">
                 {JSON.stringify(executionResult.payload, null, 2)}
               </pre>
             </motion.div>
@@ -205,15 +203,15 @@ const HeroTerminal = ({ onOpenTerminal }) => {
         </AnimatePresence>
       </div>
 
-      {/* Bottom Interactive Sandbox Runner */}
-      <div className="p-3 bg-space-900/90 border-t border-white/10 flex items-center justify-between">
+      {/* Bottom Sandbox Runner Bar */}
+      <div className="p-3.5 bg-obsidian-950/90 border-t border-white/10 flex items-center justify-between">
         <button
           onClick={handleExecute}
           disabled={isExecuting}
-          className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 text-xs font-mono font-semibold transition-all hover:scale-105 active:scale-95 disabled:opacity-50"
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-linear-violet to-linear-indigo hover:from-linear-violet/90 hover:to-linear-indigo/90 text-white text-xs font-mono font-bold shadow-lg shadow-linear-violet/20 transition-all hover:scale-105 active:scale-95 disabled:opacity-50"
         >
           <Play className={`w-3.5 h-3.5 ${isExecuting ? 'animate-spin' : ''}`} />
-          <span>{isExecuting ? 'Dispatching Request...' : 'Test Live API Endpoint'}</span>
+          <span>{isExecuting ? 'Dispatching...' : 'Test Live API Endpoint'}</span>
         </button>
 
         <button
@@ -221,13 +219,13 @@ const HeroTerminal = ({ onOpenTerminal }) => {
             soundFx.playBlip();
             onOpenTerminal();
           }}
-          className="flex items-center gap-1.5 text-xs font-mono text-slate-400 hover:text-cyan-400 transition-colors"
+          className="flex items-center gap-1.5 text-xs font-mono text-slate-400 hover:text-linear-cyan transition-colors"
         >
-          <Terminal className="w-3.5 h-3.5" />
+          <Terminal className="w-3.5 h-3.5 text-linear-cyan" />
           <span>Launch CLI (~)</span>
         </button>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
@@ -235,7 +233,7 @@ const Hero = ({ onOpenResume, onOpenTerminal, onShowToast }) => {
   return (
     <section
       id="about"
-      className="relative min-h-[90vh] flex items-center pt-28 pb-16 overflow-hidden bg-grid-pattern"
+      className="relative min-h-[92vh] flex items-center pt-28 pb-16 overflow-hidden bg-grid-pattern"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -246,42 +244,46 @@ const Hero = ({ onOpenResume, onOpenTerminal, onShowToast }) => {
             transition={{ duration: 0.8, ease: 'easeOut' }}
             className="lg:col-span-7 flex flex-col space-y-6"
           >
-            {/* Live Availability Radar Beacon */}
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 w-fit text-xs font-mono text-emerald-300 shadow-sm backdrop-blur-md">
+            {/* Linear / Raycast Rainbow Perimeter Status Pill */}
+            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-white/15 bg-obsidian-900/80 w-fit text-xs font-mono text-slate-200 shadow-xl backdrop-blur-xl relative overflow-hidden group">
+              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-linear-violet/20 via-linear-cyan/20 to-linear-crimson/20 opacity-50" />
               <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-linear-mint opacity-75" />
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-linear-mint" />
               </span>
-              <span>Available for Backend & Full-Stack Roles • Bengaluru / Relocate</span>
+              <span className="relative z-10 font-medium">
+                Software Engineer @ Genpact • Scalable Python & Distributed Systems
+              </span>
             </div>
 
-            {/* Main Headline */}
+            {/* High-Impact Headline */}
             <div className="space-y-3">
-              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.1]">
-                Hi, I'm <br />
-                <span className="bg-gradient-to-r from-cyan-400 via-teal-300 to-blue-500 bg-clip-text text-transparent">
-                  {PERSONAL_INFO.name}
-                </span>
+              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.08]">
+                Architecting <br />
+                <span className="bg-gradient-to-r from-linear-cyan via-linear-violet to-linear-crimson bg-clip-text text-transparent">
+                  High-Throughput
+                </span>{' '}
+                Backends.
               </h1>
 
-              {/* Dynamic Animated Subtitle */}
-              <div className="text-lg sm:text-2xl font-semibold text-cyan-300 font-mono flex items-center gap-2 min-h-[36px]">
-                <span className="text-slate-400">&gt;</span>
+              {/* Dynamic Typewriter */}
+              <div className="text-lg sm:text-2xl font-semibold text-slate-300 font-mono flex items-center gap-2 min-h-[36px]">
+                <span className="text-linear-cyan font-bold">&gt;</span>
                 <TypeAnimation
                   sequence={[
-                    'Software Engineer @ Genpact',
+                    'Python & Django Enterprise Architect',
                     2000,
-                    'Python & Django Specialist',
+                    'Oracle DB & PostgreSQL Query Optimizer',
                     2000,
-                    'PostgreSQL & Oracle DB Optimizer',
+                    'AWS Lambda & Docker Microservices',
                     2000,
-                    'LeetCode Top 6.3% (Rating 1835)',
+                    'Competitive Programmer (LeetCode Rating 1835)',
                     2000,
                   ]}
                   wrapper="span"
                   speed={45}
                   repeat={Infinity}
-                  className="text-cyan-400 text-glow"
+                  className="text-linear-cyan text-glow-cyan"
                 />
               </div>
 
@@ -290,34 +292,51 @@ const Hero = ({ onOpenResume, onOpenTerminal, onShowToast }) => {
               </p>
             </div>
 
-            {/* Key Stat Cards with CountUp */}
+            {/* Linear-Style High Density Bento Telemetry Metrics */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-              {PERSONAL_INFO.stats.map((stat, idx) => (
-                <div
-                  key={idx}
-                  className="glass-panel p-3.5 rounded-xl border border-white/10 bg-space-900/60 flex flex-col"
-                >
-                  <div className="text-xs text-slate-400">{stat.label}</div>
-                  <div className="text-xl sm:text-2xl font-bold text-white font-mono mt-0.5 bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                    <AnimatedCounter value={stat.value} duration={1.6} />
-                  </div>
-                  <div className="text-[10px] text-slate-500 mt-1 font-mono line-clamp-1">
-                    {stat.subtext}
-                  </div>
+              <SpotlightCard className="p-4 border-white/10 bg-obsidian-900/80 flex flex-col justify-between">
+                <div className="text-[11px] text-slate-400 font-mono uppercase tracking-wider">Experience</div>
+                <div className="text-2xl font-extrabold text-white font-mono mt-1 bg-gradient-to-r from-linear-cyan to-linear-violet bg-clip-text text-transparent">
+                  <AnimatedCounter value="2+ Years" duration={1.6} />
                 </div>
-              ))}
+                <div className="text-[10px] text-slate-500 font-mono mt-1">Enterprise Production</div>
+              </SpotlightCard>
+
+              <SpotlightCard className="p-4 border-white/10 bg-obsidian-900/80 flex flex-col justify-between">
+                <div className="text-[11px] text-slate-400 font-mono uppercase tracking-wider">LeetCode</div>
+                <div className="text-2xl font-extrabold text-white font-mono mt-1 bg-gradient-to-r from-linear-violet to-linear-crimson bg-clip-text text-transparent">
+                  <AnimatedCounter value="1835" duration={1.6} />
+                </div>
+                <div className="text-[10px] text-slate-500 font-mono mt-1">Top 6.3% Globally</div>
+              </SpotlightCard>
+
+              <SpotlightCard className="p-4 border-white/10 bg-obsidian-900/80 flex flex-col justify-between">
+                <div className="text-[11px] text-slate-400 font-mono uppercase tracking-wider">Latency Cut</div>
+                <div className="text-2xl font-extrabold text-white font-mono mt-1 bg-gradient-to-r from-linear-mint to-linear-cyan bg-clip-text text-transparent">
+                  <AnimatedCounter value="45%" duration={1.6} />
+                </div>
+                <div className="text-[10px] text-slate-500 font-mono mt-1">Oracle DB Tuning</div>
+              </SpotlightCard>
+
+              <SpotlightCard className="p-4 border-white/10 bg-obsidian-900/80 flex flex-col justify-between">
+                <div className="text-[11px] text-slate-400 font-mono uppercase tracking-wider">Time Saved</div>
+                <div className="text-2xl font-extrabold text-white font-mono mt-1 bg-gradient-to-r from-linear-amber to-linear-violet bg-clip-text text-transparent">
+                  <AnimatedCounter value="40 hrs/wk" duration={1.6} />
+                </div>
+                <div className="text-[10px] text-slate-500 font-mono mt-1">Automated Pre-QC</div>
+              </SpotlightCard>
             </div>
 
             {/* Primary Action Buttons */}
             <div className="flex flex-wrap items-center gap-4 pt-4">
               <motion.button
-                whileHover={{ scale: 1.04, boxShadow: '0px 0px 25px rgba(6,182,212,0.4)' }}
+                whileHover={{ scale: 1.04, boxShadow: '0px 0px 30px rgba(138,99,246,0.4)' }}
                 whileTap={{ scale: 0.96 }}
                 onClick={() => {
                   soundFx.playClick();
                   onOpenResume();
                 }}
-                className="flex items-center gap-2 px-6 py-3.5 bg-gradient-to-r from-cyan-500 via-teal-400 to-blue-600 text-black font-bold rounded-xl shadow-lg shadow-cyan-500/25 transition-all relative overflow-hidden group"
+                className="flex items-center gap-2 px-6 py-3.5 bg-gradient-to-r from-linear-violet via-linear-indigo to-linear-cyan text-white font-bold rounded-2xl shadow-xl shadow-linear-violet/25 transition-all relative overflow-hidden group"
               >
                 <div className="absolute inset-0 w-full h-full bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out" />
                 <Download className="w-4 h-4" />
@@ -331,11 +350,11 @@ const Hero = ({ onOpenResume, onOpenTerminal, onShowToast }) => {
                   soundFx.playBlip();
                   onOpenTerminal();
                 }}
-                className="flex items-center gap-2 px-5 py-3.5 bg-space-900/80 border border-cyan-500/40 text-cyan-300 font-semibold rounded-xl transition-all hover:border-cyan-400 hover:text-white"
+                className="flex items-center gap-2 px-5 py-3.5 bg-obsidian-900/90 border border-white/15 text-slate-200 font-semibold rounded-2xl transition-all hover:border-linear-cyan hover:text-white shadow-lg"
               >
-                <Terminal className="w-4 h-4 text-cyan-400" />
+                <Terminal className="w-4 h-4 text-linear-cyan" />
                 <span>Interactive CLI</span>
-                <kbd className="hidden sm:inline px-1.5 py-0.5 text-[10px] bg-space-950 rounded border border-cyan-500/30 text-slate-400">
+                <kbd className="hidden sm:inline px-1.5 py-0.5 text-[10px] bg-obsidian-950 rounded border border-white/10 text-slate-400">
                   Ctrl+K
                 </kbd>
               </motion.button>
@@ -343,25 +362,25 @@ const Hero = ({ onOpenResume, onOpenTerminal, onShowToast }) => {
               <a
                 href="#projects"
                 onClick={() => soundFx.playClick()}
-                className="flex items-center gap-1.5 text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors px-2 py-2"
+                className="flex items-center gap-1.5 text-sm font-semibold text-slate-300 hover:text-linear-cyan transition-colors px-2 py-2"
               >
-                <span>View Projects</span>
+                <span>Explore Featured Work</span>
                 <ArrowRight className="w-4 h-4" />
               </a>
             </div>
 
             {/* Core Domain Badges */}
-            <div className="pt-4 border-t border-white/10 flex flex-wrap gap-6 text-xs text-slate-400 font-medium">
+            <div className="pt-4 border-t border-white/10 flex flex-wrap gap-6 text-xs text-slate-400 font-medium font-mono">
               <div className="flex items-center gap-2">
-                <Server className="w-4 h-4 text-cyan-400" />
+                <Server className="w-4 h-4 text-linear-violet" />
                 <span>Scalable Python Backend & REST</span>
               </div>
               <div className="flex items-center gap-2">
-                <Database className="w-4 h-4 text-blue-400" />
+                <Database className="w-4 h-4 text-linear-cyan" />
                 <span>PostgreSQL / Oracle DB Query Tuning</span>
               </div>
               <div className="flex items-center gap-2">
-                <GitBranch className="w-4 h-4 text-emerald-400" />
+                <GitBranch className="w-4 h-4 text-linear-mint" />
                 <span>AWS Lambda & Docker CI/CD</span>
               </div>
             </div>
