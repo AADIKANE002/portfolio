@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import ParticleBackground from './components/ParticleBackground';
+import ScrollProgress from './components/ScrollProgress';
 import Hero from './components/Hero';
 import Experience from './components/Experience';
 import Projects from './components/Projects';
@@ -8,6 +9,7 @@ import ProjectModal from './components/ProjectModal';
 import Skills from './components/Skills';
 import Achievements from './components/Achievements';
 import Terminal from './components/Terminal';
+import CommandPalette from './components/CommandPalette';
 import ResumeSection from './components/ResumeSection';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
@@ -17,6 +19,7 @@ function App() {
   const [theme, setTheme] = useState('space');
   const [soundEnabled, setSoundEnabled] = useState(false);
   const [terminalOpen, setTerminalOpen] = useState(false);
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [resumeOpen, setResumeOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
   const [toastMessage, setToastMessage] = useState(null);
@@ -26,12 +29,18 @@ function App() {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
 
-  // Global keyboard shortcuts (Ctrl+K or ` opens CLI)
+  // Global keyboard shortcuts (Ctrl+K/Cmd+K opens Command Palette, ` or ~ opens CLI)
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if ((e.ctrlKey && e.key === 'k') || e.key === '`') {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
         e.preventDefault();
-        setTerminalOpen((prev) => !prev);
+        setCommandPaletteOpen((prev) => !prev);
+      } else if (e.key === '`' || e.key === '~') {
+        // Only toggle if not in an input/textarea
+        if (!['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) {
+          e.preventDefault();
+          setTerminalOpen((prev) => !prev);
+        }
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -47,13 +56,16 @@ function App() {
 
   return (
     <div className="relative min-h-screen bg-space-950 text-slate-100 selection:bg-cyan-500 selection:text-black">
-      {/* Interactive Particle Constellation */}
+      {/* Reading Scroll Progress Bar */}
+      <ScrollProgress />
+
+      {/* Interactive Particle Atmosphere Canvas */}
       <ParticleBackground theme={theme} />
 
       {/* Grid Pattern Overlay */}
       <div className="fixed inset-0 bg-grid-pattern opacity-40 pointer-events-none z-0" />
 
-      {/* Navigation */}
+      {/* Navigation Bar */}
       <Navbar
         currentTheme={theme}
         setTheme={setTheme}
@@ -61,9 +73,10 @@ function App() {
         setSoundEnabled={setSoundEnabled}
         onOpenTerminal={() => setTerminalOpen(true)}
         onOpenResume={() => setResumeOpen(true)}
+        onOpenCommandPalette={() => setCommandPaletteOpen(true)}
       />
 
-      {/* Main Content Layout */}
+      {/* Main Content Sections */}
       <main className="relative z-10">
         <Hero
           onOpenResume={() => setResumeOpen(true)}
@@ -73,9 +86,7 @@ function App() {
 
         <Experience />
 
-        <Projects
-          onSelectProject={(proj) => setSelectedProject(proj)}
-        />
+        <Projects onSelectProject={(proj) => setSelectedProject(proj)} />
 
         <Skills />
 
@@ -85,7 +96,20 @@ function App() {
       </main>
 
       {/* Footer */}
-      <Footer />
+      <Footer onOpenTerminal={() => setTerminalOpen(true)} />
+
+      {/* Global Command Palette (Ctrl+K) */}
+      <CommandPalette
+        isOpen={commandPaletteOpen}
+        onClose={() => setCommandPaletteOpen(false)}
+        onOpenTerminal={() => setTerminalOpen(true)}
+        onOpenResume={() => setResumeOpen(true)}
+        currentTheme={theme}
+        setTheme={setTheme}
+        soundEnabled={soundEnabled}
+        setSoundEnabled={setSoundEnabled}
+        onShowToast={showToast}
+      />
 
       {/* Interactive Terminal / CLI Modal */}
       <Terminal

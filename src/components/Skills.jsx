@@ -1,7 +1,20 @@
 import React, { useState } from 'react';
-import { Code2, Cloud, Server, Brain, CheckCircle, Sparkles, Terminal, Layers } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  Code2,
+  Cloud,
+  Server,
+  Brain,
+  CheckCircle,
+  Sparkles,
+  Terminal,
+  Layers,
+  Search
+} from 'lucide-react';
 import { SKILL_CATEGORIES } from '../data/portfolioData';
 import { soundFx } from '../utils/sound';
+import SpotlightCard from './SpotlightCard';
+import AnimatedCounter from './AnimatedCounter';
 
 const Skills = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -25,7 +38,13 @@ const Skills = () => {
     <section id="skills" className="py-24 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Heading */}
-        <div className="flex flex-col items-center text-center mb-14">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.7 }}
+          className="flex flex-col items-center text-center mb-14"
+        >
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-mono font-medium mb-3">
             <Brain className="w-3.5 h-3.5" />
             <span>Technical Proficiencies</span>
@@ -34,10 +53,10 @@ const Skills = () => {
             Skills & <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">Tech Stack</span>
           </h2>
           <p className="mt-4 text-slate-400 max-w-2xl text-base sm:text-lg">
-            Core competencies across modern programming languages, cloud serverless infrastructures, agentic AI frameworks, and database optimization.
+            Core competencies across modern backend architectures, cloud serverless infrastructures, agentic AI frameworks, and database query optimization.
           </p>
 
-          {/* Category Tabs */}
+          {/* Category Tabs with Animated Sliding Pill */}
           <div className="flex flex-wrap justify-center gap-2.5 mt-8 p-1.5 rounded-2xl bg-space-900/80 border border-white/10 backdrop-blur-md">
             {SKILL_CATEGORIES.map((cat, idx) => {
               const isSelected = activeTab === idx;
@@ -48,25 +67,32 @@ const Skills = () => {
                     soundFx.playClick();
                     setActiveTab(idx);
                   }}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all ${
-                    isSelected
-                      ? 'bg-gradient-to-r from-purple-500 to-cyan-500 text-black font-bold shadow-lg shadow-purple-500/20 scale-105'
-                      : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                  className={`relative flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all ${
+                    isSelected ? 'text-black font-bold' : 'text-slate-400 hover:text-slate-200'
                   }`}
                 >
-                  {getCategoryIcon(cat.icon)}
-                  <span>{cat.title}</span>
+                  {isSelected && (
+                    <motion.div
+                      layoutId="skillTabPill"
+                      className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-500 shadow-lg shadow-purple-500/25"
+                      transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                    />
+                  )}
+                  <span className="relative z-10 flex items-center gap-2">
+                    {getCategoryIcon(cat.icon)}
+                    <span>{cat.title}</span>
+                  </span>
                 </button>
               );
             })}
           </div>
-        </div>
+        </motion.div>
 
-        {/* Active Category Display */}
+        {/* Active Category Display Card */}
         <div className="max-w-4xl mx-auto">
-          <div className="glass-panel rounded-2xl p-6 sm:p-8 border border-white/10 bg-space-900/80">
+          <SpotlightCard className="p-6 sm:p-8 border border-white/10 bg-space-900/85">
             <div className="flex items-center gap-3 pb-6 mb-6 border-b border-white/10">
-              <div className="p-3 rounded-xl bg-white/5 border border-white/10">
+              <div className="p-3 rounded-2xl bg-white/5 border border-white/10">
                 {getCategoryIcon(SKILL_CATEGORIES[activeTab].icon)}
               </div>
               <div>
@@ -79,11 +105,14 @@ const Skills = () => {
               </div>
             </div>
 
-            {/* Skill Progress Cards */}
+            {/* Skill Progress Cards with Staggered Fade */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               {SKILL_CATEGORIES[activeTab].skills.map((skill, idx) => (
-                <div
+                <motion.div
                   key={skill.name}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3, delay: idx * 0.05 }}
                   className="p-4 rounded-xl bg-space-950/70 border border-white/5 hover:border-cyan-500/30 transition-all group"
                 >
                   <div className="flex items-center justify-between mb-2">
@@ -95,33 +124,60 @@ const Skills = () => {
                     </span>
                   </div>
 
-                  {/* Progress Meter Bar */}
-                  <div className="w-full h-2 bg-space-800 rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 rounded-full transition-all duration-1000 ease-out"
-                      style={{ width: `${skill.level}%` }}
-                    />
+                  {/* Progress Meter Bar with Animated Percentage */}
+                  <div className="flex items-center gap-3">
+                    <div className="flex-1 h-2 bg-space-800 rounded-full overflow-hidden relative">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        whileInView={{ width: `${skill.level}%` }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1.2, ease: 'easeOut', delay: idx * 0.08 }}
+                        className="h-full bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-400 rounded-full shadow-[0_0_8px_rgba(6,182,212,0.6)]"
+                      />
+                    </div>
+                    <span className="text-xs font-mono font-bold text-slate-400 w-8 text-right">
+                      {skill.level}%
+                    </span>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
-          </div>
+          </SpotlightCard>
         </div>
 
-        {/* Tech Cloud Marquee / Grid */}
-        <div className="mt-12 max-w-4xl mx-auto flex flex-wrap justify-center items-center gap-2.5">
+        {/* Interactive Tech Cloud Marquee / Badges */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="mt-12 max-w-4xl mx-auto flex flex-wrap justify-center items-center gap-2.5"
+        >
           {[
-            "Python", "AWS Lambda", "Docker", "Agentic AI", "Django", "Oracle DB", "LeetCode 1835",
-            "SQL Tuning", "REST APIs", "Firebase", "C++", "Java", "CI/CD Pipelines", "Prompt Orchestration"
+            'Python',
+            'AWS Lambda',
+            'Docker',
+            'Agentic AI',
+            'Django',
+            'Oracle DB',
+            'LeetCode 1835',
+            'SQL Tuning',
+            'REST APIs',
+            'Firebase',
+            'C++',
+            'Java',
+            'CI/CD Pipelines',
+            'Prompt Orchestration',
+            'PostgreSQL'
           ].map((item, idx) => (
             <span
               key={idx}
-              className="px-3.5 py-1.5 rounded-full text-xs font-mono bg-white/5 border border-white/10 text-slate-300 hover:border-cyan-400 hover:text-cyan-300 hover:bg-cyan-500/10 transition-all cursor-default"
+              className="px-3.5 py-1.5 rounded-full text-xs font-mono bg-white/5 border border-white/10 text-slate-300 hover:border-cyan-400 hover:text-cyan-300 hover:bg-cyan-500/10 transition-all cursor-default hover:scale-105"
             >
               #{item}
             </span>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

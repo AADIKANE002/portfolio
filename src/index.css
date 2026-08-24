@@ -3,25 +3,117 @@
 @tailwind utilities;
 
 @layer base {
-  body {
-    @apply bg-ide-bg text-ide-text font-sans antialiased selection:bg-ide-primary/30 selection:text-white;
+  :root {
+    --color-primary: #06b6d4;
+    --color-primary-rgb: 6, 182, 212;
+    --color-accent: #3b82f6;
+    --color-accent-rgb: 59, 130, 246;
+    --color-bg: #030712;
+    --color-surface: #0b0f19;
+    --color-border: rgba(255, 255, 255, 0.08);
   }
-  
-  /* Custom Scrollbar for IDE feel */
+
+  [data-theme='cyberpunk'] {
+    --color-primary: #ec4899;
+    --color-primary-rgb: 236, 72, 153;
+    --color-accent: #06b6d4;
+    --color-accent-rgb: 6, 182, 212;
+    --color-bg: #090314;
+    --color-surface: #140b24;
+    --color-border: rgba(236, 72, 153, 0.2);
+  }
+
+  [data-theme='emerald'] {
+    --color-primary: #10b981;
+    --color-primary-rgb: 16, 185, 129;
+    --color-accent: #06b6d4;
+    --color-accent-rgb: 6, 182, 212;
+    --color-bg: #02120b;
+    --color-surface: #062016;
+    --color-border: rgba(16, 185, 129, 0.2);
+  }
+
+  [data-theme='slate'] {
+    --color-primary: #38bdf8;
+    --color-primary-rgb: 56, 189, 248;
+    --color-accent: #818cf8;
+    --color-accent-rgb: 129, 140, 248;
+    --color-bg: #0a0e17;
+    --color-surface: #111827;
+    --color-border: rgba(56, 189, 248, 0.15);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: #f1f5f9;
+    font-family: 'Inter', system-ui, sans-serif;
+    overflow-x: hidden;
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+
+  /* Custom Scrollbar */
   ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
   }
   ::-webkit-scrollbar-track {
-    @apply bg-ide-bg;
+    background: #030712;
   }
   ::-webkit-scrollbar-thumb {
-    @apply bg-ide-border rounded-full hover:bg-ide-muted;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(6, 182, 212, 0.5);
   }
 }
 
 @layer utilities {
   .glass-panel {
-    @apply bg-ide-surface/80 backdrop-blur-md border border-ide-border;
+    background: rgba(11, 15, 25, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-panel-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .glass-panel-hover:hover {
+    border-color: rgba(6, 182, 212, 0.4);
+    box-shadow: 0 10px 30px -10px rgba(6, 182, 212, 0.15);
+    transform: translateY(-2px);
+  }
+
+  .text-glow {
+    text-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+  }
+
+  .text-glow-pink {
+    text-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
+  }
+
+  .text-glow-emerald {
+    text-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
   }
 }
+
+/* Perspective utility */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+/* Shimmer animation bar */
+@keyframes shimmer-slide {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+.animate-shimmer-slide {
+  animation: shimmer-slide 2.5s infinite;
+}
+
